@@ -9,11 +9,11 @@ AIO_KEY = "your_aio_key"
 
 client = mqtt.Client()
 client.userame_pw_set(AIO_USERNAME, AIO_KEY)
-client.connec("io.adafruit.com", 1883, 60)
+client.connect("io.adafruit.com", 1883, 60)
 
 
 while True:
-    data = mpu6050.get_all_data()   # read from mpu6050
+    data = mpu6050.get_all_data()   # read from mpu6050 
 
     payload = json.dumps(data)
 
