@@ -4,10 +4,10 @@ import paho.mqtt.client as mqtt
 # from flask import flask
 import json
 import time
+import os
 
 # ------------ Configuration ----------
 TIME_INTERVAL = 0.5
-
 
 def on_connect(client, userdata, flags, rc):
     client.subscribe("louieshe/feeds/250")
@@ -36,7 +36,8 @@ client.loop_forever()
 
 if __name__ == "__main__":
     #include error loging
-    errorlog = [] 
+    log = [] 
+    error_log = []
 
 while True:
     if current_msg:
@@ -52,8 +53,10 @@ while True:
             if alarm == 1:
                 # setRGB(255, 0, 0)
                 # setText(f"{timestamp} , {magnitude}\nDANGER!!!")
+
+                # buzzer
                 print("ALARM TRIGGERED")
-                errorlog.append((timestamp, magnitude))
+                error_log.append((timestamp, magnitude))
                 time.sleep(3)
             else:
                 # setRGB(0, 255, 0)
@@ -64,6 +67,13 @@ while True:
         except IOError:
             print("IOError")
 
+        if i == 2 :# button pressed:
+            with open("accel_log.txt", "w") as f:
+                for entry in log:
+                    f.write(json.dumps(entry)+"\n")
+            print("Logged")
+            time.sleep(1) # debounce
+    
     time.sleep(TIME_INTERVAL)
 
 
