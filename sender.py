@@ -7,7 +7,6 @@ import json
 THRESHOLD = 20.0
 SAMPLE_INTERVAL = 0.5
 
-
 # read acceleration magnitude from sensor
 def get_accel_magnitude(sensor):
     accel = sensor.get_accel_data()
@@ -15,30 +14,19 @@ def get_accel_magnitude(sensor):
 
     return mag
 
-# # mqtt publishing
-# def on_connect(client, userdata, flags, rc):
+# ---------- mqtt publishing --------------
+def on_connect(client, userdata, flags, rc):
+    client.subscribe("louieshe/feeds/250")
 
-#     print("Connected to server (i.e., broker) with result code "+str(rc))
-#     client.subscribe("louieshe/250")
-
-#     #Add the custom callbacks by indicating the topic and the name of the callback handle
-#     client.message_callback_add("louieshe/250", on_message_from_ping) # -- 
-
-# def on_message(client, userdata, msg):
-#     print("Default callback - topic: " + msg.topic + "   msg: " + str(msg.payload, "utf-8"))
-
-# #Custom message callback. info
-# def on_message_from_ping(client, userdata, message):
-
-#    num = (message.payload.decode())+ 1
-
-#    print(f"Custom callback - num {num}")
-
+def on_message(client, userdata, msg):
+    print(json.loads(msg.payload.decode()))
 
 client = mqtt.Client()
-client.username_pw_set("your_username", "your_aio_key")
+client.username_pw_set("louieshe", "aio_QkNz07b4Jbyp4xAH7VIcxKl2GnIz")
+client.on_connect = on_connect
+client.on_message = on_message
 client.connect("io.adafruit.com", 1883, 60)
-client.loop_start()
+client.loop_forever()
 
 if __name__ == "__main__":
     sensor = mpu6050(0x68)
