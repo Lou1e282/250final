@@ -14,3 +14,5 @@ client.on_message = on_message
 client.connect("io.adafruit.com", 1883, 60)
 client.loop_forever()
 
+# consistency test
+

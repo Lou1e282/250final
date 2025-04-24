@@ -18,15 +18,11 @@ def get_accel_magnitude(sensor):
 def on_connect(client, userdata, flags, rc):
     client.subscribe("louieshe/feeds/250")
 
-def on_message(client, userdata, msg):
-    print(json.loads(msg.payload.decode()))
-
 client = mqtt.Client()
-client.username_pw_set("louieshe", "aio_QkNz07b4Jbyp4xAH7VIcxKl2GnIz")
+client.username_pw_set("louieshe", "aio_xvPv56CV8Yyv3Vz9B7CDo0BSEK83")
 client.on_connect = on_connect
-client.on_message = on_message
 client.connect("io.adafruit.com", 1883, 60)
-client.loop_forever()
+client.loop_start()
 
 if __name__ == "__main__":
     sensor = mpu6050(0x68)
@@ -40,25 +36,16 @@ while True:
         if magnitude > THRESHOLD:
             # ---------- buzzz ----------------
             entry = {"timestamp": timestamp, "magnitude": magnitude, "alarm": 1} 
-            print(f"{timestamp:.2f}: {magnitude:.2f}, Alarm triggered")
+            # print("Triggered: ", timestamp, magnitude)
         else:
-            print(f"{timestamp:.2f}: {magnitude:.2f}, Safe") 
+            # print("Safe: ", timestamp, magnitude)
+            i = 2
 
-        client.publish("louieshe/250", json.dumps(entry))
+        client.publish("louieshe/feeds/250", json.dumps(entry))
+        print(entry )
 
     except IOError:
         print("IOError")
 
 
     time.sleep(SAMPLE_INTERVAL)
-
-
-
-
-
-
-
-    
-
-    
-
