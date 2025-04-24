@@ -1,0 +1,15 @@
+import paho.mqtt.client as mqtt
+import json
+
+def on_connect(client, userdata, flags, rc):
+    client.subscribe("your_username/feeds/test")
+
+def on_message(client, userdata, msg):
+    print(json.loads(msg.payload.decode()))
+
+client = mqtt.Client()
+client.username_pw_set("your_username", "your_aio_key")
+client.on_connect = on_connect
+client.on_message = on_message
+client.connect("io.adafruit.com", 1883, 60)
+client.loop_forever()
