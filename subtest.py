@@ -2,7 +2,7 @@ import paho.mqtt.client as mqtt
 import json
 
 def on_connect(client, userdata, flags, rc):
-    client.subscribe("louieshe/250")
+    client.subscribe("louieshe/feeds/250")
 
 def on_message(client, userdata, msg):
     print(json.loads(msg.payload.decode()))
