@@ -23,7 +23,7 @@ def on_disconnect(client, userdata, rc):
     print("Disconnected")
 
 client = mqtt.Client()
-client.username_pw_set("louieshe", "aio_QkNz07b4Jbyp4xAH7VIcxKl2GnIz")
+client.username_pw_set("", "")
 client.on_connect = on_connect
 client.on_message = on_message
 client.connect("io.adafruit.com", 1883, 60)
