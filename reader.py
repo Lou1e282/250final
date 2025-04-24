@@ -1,7 +1,9 @@
-import paho.mqtt.client as mqtt
+import paho.mqtt.client as mqtt 
+# from flask import flask
+import sys
+sys.path.append('~/Dexter/GrovePi/Software/Python')
 # import grovepi
 # from grove_rgb_lcd import * 
-# from flask import flask
 import json
 import time
 import os
@@ -31,7 +33,7 @@ client.loop_forever()
 
 # ------------ lcd ------------
 # clear
-# setText("")
+setText("")
 
 
 if __name__ == "__main__":
@@ -42,25 +44,25 @@ if __name__ == "__main__":
 while True:
     if current_msg:
         try:
-            timestamp = current_msg.get("timestamp")
+            realtime = time.localtime()
             magnitude = current_msg.get("magnitude")
             alarm = current_msg.get("alarm")
 
-            print("Time:", timestamp, "Magnitude:", magnitude)
+            print("Magnitude:", magnitude)
 
-            log.append(current_msg)
+            log.append(realtime, current_msg)
 
             if alarm == 1:
-                # setRGB(255, 0, 0)
-                # setText(f"{timestamp} , {magnitude}\nDANGER!!!")
+                setRGB(255, 0, 0)
+                setText("%d g\n DANGER" %(magnitude))
 
                 # buzzer
                 print("ALARM TRIGGERED")
-                error_log.append((timestamp, magnitude))
-                time.sleep(3)
+                error_log.append((magnitude))
+                time.sleep(1)
             else:
-                # setRGB(0, 255, 0)
-                # setText(f"{timestamp} , {magnitude}")
+                setRGB(0, 255, 0)
+                setText("%d g\n DANGER" %(magnitude))
                 print("SAFE")
 
                 current_msg = None  # Clear after processing
@@ -72,7 +74,7 @@ while True:
                 for entry in log:
                     f.write(json.dumps(entry)+"\n")
             print("Logged")
-            time.sleep(1) # debounce
+            time.sleep(0.5) # debounce
     
     time.sleep(TIME_INTERVAL)
 

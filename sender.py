@@ -30,19 +30,14 @@ if __name__ == "__main__":
 while True: 
     try: 
         magnitude = get_accel_magnitude(sensor)
-        timestamp = time.time()
-        entry = {"timestamp": timestamp, "magnitude": magnitude, "alarm": 0} 
+        entry = {"magnitude": magnitude, "alarm": 0} 
 
         if magnitude > THRESHOLD:
-            # ---------- buzzz ----------------
-            entry = {"timestamp": timestamp, "magnitude": magnitude, "alarm": 1} 
-            # print("Triggered: ", timestamp, magnitude)
-        else:
-            # print("Safe: ", timestamp, magnitude)
-            i = 2
+            # buzzer
+            entry = {"magnitude": magnitude, "alarm": 1} 
 
         client.publish("louieshe/feeds/250", json.dumps(entry))
-        print(entry )
+        print(entry)
 
     except IOError:
         print("IOError")
