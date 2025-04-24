@@ -35,7 +35,6 @@ client.loop_forever()
 # clear
 setText("")
 
-
 if __name__ == "__main__":
     #include error loging
     log = [] 
@@ -44,25 +43,26 @@ if __name__ == "__main__":
 while True:
     if current_msg:
         try:
-            realtime = time.localtime()
+            timestamp = time.localtime()
+            formatted_time = "%02d:%02d:%02d" % (timestamp.tm_hour, timestamp.tm_min, timestamp.tm_sec)
             magnitude = current_msg.get("magnitude")
+            rounded_mag = round(magnitude, 2)
             alarm = current_msg.get("alarm")
 
             print("Magnitude:", magnitude)
 
-            log.append(realtime, current_msg)
+            log.append(timestamp, current_msg)
 
             if alarm == 1:
                 setRGB(255, 0, 0)
-                setText("%d g\n DANGER" %(magnitude))
-
+                setText("%s\n%5.2f        DANGER" % (formatted_time, rounded_mag))
                 # buzzer
                 print("ALARM TRIGGERED")
                 error_log.append((magnitude))
                 time.sleep(1)
             else:
                 setRGB(0, 255, 0)
-                setText("%d g\n DANGER" %(magnitude))
+                setText("%s\n%5.2f" % (formatted_time, rounded_mag))
                 print("SAFE")
 
                 current_msg = None  # Clear after processing
