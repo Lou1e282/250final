@@ -8,6 +8,7 @@ def on_message(client, userdata, msg):
     print(json.loads(msg.payload.decode()))
 
 client = mqtt.Client()
+client.username_pw_set("louieshe", "aio_xxxxxxxxxxxxxxxxxxxxx")
 client.on_connect = on_connect
 client.on_message = on_message
 client.connect("io.adafruit.com", 1883, 60)
