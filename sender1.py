@@ -19,7 +19,7 @@ def on_connect(client, userdata, flags, rc):
     client.subscribe("louieshe/feeds/250")
 
 client = mqtt.Client()
-client.username_pw_set("louieshe", "aio_xvPv56CV8Yyv3Vz9B7CDo0BSEK83")
+client.username_pw_set("louieshe", "aio_TVDC93n0PNSAVjPWFOVzWGoTwkaF")
 client.on_connect = on_connect
 client.connect("io.adafruit.com", 1883, 60)
 client.loop_start()
