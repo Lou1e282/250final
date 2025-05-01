@@ -4,7 +4,7 @@ import json
 import time 
 
 # ------------ Configuration ----------
-TIME_INTERVAL = 1
+MQTT_INTERVAL = 1
 CRASH_THRESHOLD = 5 
 current_magnitude = None
 current_alarm = None
@@ -37,7 +37,7 @@ client.connect("io.adafruit.com", 1883, 60)
 client.loop_start()
 
 # ------------ Main Loop ------------
-log = []
+accel_log = []        ## logging past 3 acceleration readings 
 
 while True:
     if new_data and current_magnitude is not None and current_alarm is not None:
@@ -48,7 +48,7 @@ while True:
 
             print("Magnitude:", current_magnitude)
 
-            log.append((formatted_time, {"magnitude": current_magnitude}))
+            accel_log.append((formatted_time, {"magnitude": current_magnitude}))
 
             if current_alarm == 1:
                 setRGB(255, 0, 0)
@@ -61,7 +61,7 @@ while True:
                 print("SAFE")
 
             # crash detection
-            if len(log) >= 2:
+            if len(log) >= 3:
                 prev_mag = log[-2][1].get("magnitude", 0)
                 if abs(current_magnitude - prev_mag) > CRASH_THRESHOLD:
                     print("CRASH DETECTED")
@@ -71,4 +71,4 @@ while True:
         except Exception as e:
             print("Error:", e)
 
-    time.sleep(TIME_INTERVAL)
+    time.sleep(MQTT_INTERVAL)

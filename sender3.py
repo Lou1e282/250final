@@ -4,12 +4,15 @@ import time
 import json
 
 # ---- Configuration ---- 
-THRESHOLD = 20.0
-SAMPLE_INTERVAL = 0.5
+# THRESHOLD = 10.0
+MQTT_INTERVAL = 0.5
+READ_FREQ = 50
+READS_PER_CYCLE = int(MQTT_INTERVAL * READ_FREQ)
 
 # read acceleration magnitude from sensor
 def get_accel_magnitude(sensor):
     accel = sensor.get_accel_data()
+
     mag = (accel['x']**2 + accel['y']**2 + accel['z']**2) ** 0.5 
 
     return mag
@@ -29,12 +32,14 @@ if __name__ == "__main__":
 
 while True: 
     try: 
-        magnitude = get_accel_magnitude(sensor)
-        entry = {"magnitude": magnitude, "alarm": 0} 
+        magnitudes = []
+        for _ in range(READS_PER_CYCLE):
+            magnitudes.append(get_accel_magnitude(sensor))
+            time.sleep(1/READ_FREQ)
 
-        if magnitude > THRESHOLD:
-            # buzzer
-            entry = {"magnitude": magnitude, "alarm": 1} 
+        avg_magnitude = sum(magnitudes) / READS_PER_CYCLE
+
+        entry = {"magnitude": avg_magnitude, "alarm": 0} 
 
         client.publish("louieshe/feeds/250", json.dumps(entry))
         print(entry)
@@ -43,4 +48,4 @@ while True:
         print("IOError")
 
 
-    time.sleep(SAMPLE_INTERVAL)
+    time.sleep(MQTT_INTERVAL)
