@@ -5,7 +5,7 @@ import json
 
 # ------------ Configuration ----------------
 THRESHOLD = 20.0
-SAMPLE_INTERVAL = 1
+MQTT_INTERVAL = 1
 
 # ------------ MQTT Callbacks ---------------
 def get_accel_magnitude(sensor):
@@ -39,5 +39,6 @@ while True:
     except IOError:
         print("IOError")
 
-    time.sleep(SAMPLE_INTERVAL)
+    time.sleep(MQTT_INTERVAL)
 
+s

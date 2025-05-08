@@ -38,6 +38,8 @@ client.loop_start()
 
 # ------------ Main Loop ------------
 log = []
+# wakes sender
+
 
 while True:
     if new_data and current_magnitude is not None and current_alarm is not None:
