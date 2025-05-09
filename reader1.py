@@ -45,6 +45,7 @@ while True:
     if new_data and current_magnitude is not None and current_alarm is not None:
         try:
             timestamp = time.localtime()
+            if timestamp.tm_hour 
             formatted_time = "%02d:%02d:%02d" % (timestamp.tm_hour + 16, timestamp.tm_min, timestamp.tm_sec)
             rounded_mag = round(current_magnitude, 2)
 
