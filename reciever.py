@@ -1,4 +1,3 @@
-
 import paho.mqtt.client as mqtt 
 from grove_rgb_lcd import *
 import json
@@ -31,12 +30,13 @@ def on_disconnect(client, userdata, rc):
 
 # ------------ MQTT Setup ----------
 client = mqtt.Client()
-client.username_pw_set("louieshe", "aio_wRLR09xczKn2MhuG63vL8baWJWcM")
+client.username_pw_set("louieshe", "password")
 client.on_connect = on_connect
 client.on_message = on_message
 client.on_disconnect = on_disconnect
 client.connect("io.adafruit.com", 1883, 60)
 client.loop_start()
+
 
 # ------------ Main Loop ------------
 while True:
@@ -89,3 +89,4 @@ while True:
 
     except Exception as e:
         print("Error:", e)
+

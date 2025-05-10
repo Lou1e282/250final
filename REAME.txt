@@ -1,0 +1,48 @@
+README.txt
+Project Title: Smart Bike Crash & Theft Detector
+
+Team Members:
+- Louie Shen
+- Ephraim De La Cruz
+
+Instructions to Compile/Execute Code:
+
+1. Prerequisites:
+- Raspberry Pi OS (Bullseye or later)
+- Python 2.7+ 
+- Internet connection (for MQTT communication)
+
+2. Hardware Requirements:
+- Raspberry Pi 4 (or Newer) x 2
+- MPU6050 (Accelerometer + Gyro) 
+- Rpi i2c pin board
+- Grove RGB LCD Display
+
+
+3. Setup:
+- Clone the repository:
+  git clone https://github.com/Lou1e282/250final.git
+
+- Install dependencies:
+  pip install paho-mqtt smbus2 RPi.GPIO
+
+4. Run the Sensor Publisher on edge device:
+python sensor2.py
+
+5. Run the LCD Display + Alarm client:
+python reader1.2.py
+
+External Libraries Used:
+- paho-mqtt – MQTT communication
+  https://pypi.org/project/paho-mqtt/
+- smbus2 – Used in I2C communication with MPU6050 
+  https://pypi.org/project/smbus2/
+- RPi.GPIO – Raspberry Pi GPIO control
+  https://pypi.org/project/RPi.GPIO/
+- json – JSON encoding/decoding
+  https://docs.python.org/3/library/json.html
+- time – Time-related functions
+  https://docs.python.org/3/library/time.html
+
+- ChatGPT session reference:
+https://chatgpt.com/g/g-p-680051828910819198e4f640cf815460-iot/project
