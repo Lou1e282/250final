@@ -52,7 +52,7 @@ while True:
         squared_diffs = [(x - avg_magnitude) ** 2 for x in magnitudes]
         variance = sum(squared_diffs) / READS_PER_CYCLE
 
-        #  15-cycle rolling window in detecting theft
+        #  rolling window in detecting theft
         variances.append(variance)
         if len(variances) > VAR_DURATION:
             variances.pop(0)
